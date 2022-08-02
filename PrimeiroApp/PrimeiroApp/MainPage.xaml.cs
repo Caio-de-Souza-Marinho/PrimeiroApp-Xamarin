@@ -76,16 +76,16 @@ namespace PrimeiroApp
             }
         }
 
-        private void btnOpcoes_Clicked(object sender, EventArgs e)
+        private async void btnOpcoes_Clicked(object sender, EventArgs e)
         {
             try
             {
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                await DisplayAlert("Erro", ex.Message + ex.InnerException, "OK");
             }
         }
     }
