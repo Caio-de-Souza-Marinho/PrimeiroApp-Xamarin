@@ -66,6 +66,7 @@ namespace PrimeiroApp
                 }
                 else
                 {
+                    lblDataNascimento.Text = string.Format("{0:dd/MM/yyyy}", dataConvertida);
                     int diasVividos = (int)DateTime.Now.Subtract(dataConvertida).TotalDays;
                     await DisplayAlert("Info", $"Você já viveu {diasVividos} dias!", "Ok");
                 }
@@ -80,7 +81,60 @@ namespace PrimeiroApp
         {
             try
             {
+                if (string.IsNullOrEmpty(lblDataNascimento.Text))
+                    throw new Exception("Informe a data de nascimento.");
+                else
+                {
+                    DateTime dtNascimento = Convert.ToDateTime(lblDataNascimento.Text, new CultureInfo("pt-BR"));
 
+                    string resposta = await
+                        DisplayActionSheet("Selecione uma opção:", "Cancelar", " ", "Saber o dia da semana", "Saber o dia do mês", "Saber o dia do ano");
+
+                    if (resposta == "Saber o dia da semana")
+                    {
+                        string diaSemana = String.Empty;
+                        
+                        switch (dtNascimento.DayOfWeek)
+                        {
+                            case DayOfWeek.Friday:
+                                diaSemana = "Sexta-feira";
+                                break;
+                            case DayOfWeek.Monday:
+                                diaSemana = "Segunda-feira";
+                                break;
+                            case DayOfWeek.Saturday:
+                                diaSemana = "Sábado";
+                                break;
+                            case DayOfWeek.Sunday:
+                                diaSemana = "Domingo";
+                                break;
+                            case DayOfWeek.Thursday:
+                                diaSemana = "Quinta-feira";
+                                break;
+                            case DayOfWeek.Tuesday:
+                                diaSemana = "Terça-feira";
+                                break;
+                            case DayOfWeek.Wednesday:
+                                diaSemana = "Quarta-feira";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        string msg = $"Você nasceu em {diaSemana}";
+                        await DisplayAlert("Info", msg, "Ok");
+                    }
+                    else if (resposta == "Saber o dia do mês")
+                    {
+                        string msg = $"Você nasceu no(a) {dtNascimento.Day} dia do mês";
+                        await DisplayAlert("Info", msg, "Ok");
+                    }
+                    else if (resposta == "Saber o dia do ano")
+                    {
+                        string msg = $"Você nasceu no dia {dtNascimento.DayOfYear} dia do ano";
+                        await DisplayAlert("Info", msg, "Ok");
+                    }
+                }
             }
             catch (Exception ex)
             {
