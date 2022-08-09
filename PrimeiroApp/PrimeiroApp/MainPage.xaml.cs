@@ -84,6 +84,8 @@ namespace PrimeiroApp
                 if (string.IsNullOrEmpty(lblDataNascimento.Text))
                     throw new Exception("Informe a data de nascimento.");
 
+
+
                 else
                 {
                     DateTime dtNascimento = Convert.ToDateTime(lblDataNascimento.Text, new CultureInfo("pt-BR"));
